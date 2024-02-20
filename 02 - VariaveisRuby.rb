@@ -12,8 +12,6 @@ print 'Nome: ', nome, "\n"
 
 print 'Idade: ', @idade, "\n"
 
-
-
 # Variáveis Globais
 # Aqui, uma variável global chamada '$contador' está sendo definida com o valor 0
 # Variáveis globais são acessíveis de qualquer parte do código Ruby
