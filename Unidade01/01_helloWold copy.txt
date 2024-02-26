@@ -16,8 +16,9 @@ Abra o arquivo Gemfile no editor de texto e adicione a linha:
 gem 'devise'
 Instalação da Gem:
 
-
 bundle install
+
+
 3. Configuração do Devise:
 
 Execução do Gerador do Devise:
@@ -31,6 +32,8 @@ Execução das Migrações do Banco de Dados:
 
 
 rails db:migrate
+
+
 4. Configuração das Rotas:
 
 Edição do Arquivo config/routes.rb:
@@ -59,3 +62,6 @@ rails server
 Acesso ao Projeto:
 
 Abra o navegador e acesse http://localhost:3000.
+
+
+gem install psych --platform ruby
