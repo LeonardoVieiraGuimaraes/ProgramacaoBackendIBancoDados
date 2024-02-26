@@ -1,0 +1,91 @@
+1. Crie o projeto ror_autenticacaoHTTP
+rails new ror_autenticacaoHTTP
+
+2. Adicionar o Devise ao Gemfile do projeto Rails. Abrir o arquivo Gemfile e adicionar a seguinte linha:
+gem 'devise' ou rails generate devise:install
+Instalar o Devise:
+bundle install
+
+3. Depois de instalar o Devise, você precisa gerar o modelo User. Faça isso com o seguinte comando:
+rails generate devise User
+
+4 Em seguida, migre o banco de dados com o seguinte comando:
+rails db:migrate
+
+4. Agora, você precisa adicionar algumas rotas ao seu arquivo config/routes.rb. Adicione a seguinte linha:
+devise_for :users
+
+5. Subir o servidor:
+rails server 1. Crie o projeto ror_autenticacaoHTTP
+rails new ror_autenticacaoHTTP
+
+
+
+
+Criação do Arquivo:
+
+1 . Use o terminal para criar um novo projeto Rails. Execute o comando:
+
+rails new meu_projeto
+Substitua "meu_projeto" pelo nome desejado para seu projeto.
+Acesso ao Diretório do Projeto:
+cd meu_projeto
+
+2. Adição da Gem "Devise":
+
+Edição do Arquivo Gemfile:
+
+Abra o arquivo Gemfile no editor de texto e adicione a linha:
+
+gem 'devise'
+Instalação da Gem:
+
+bundle install
+
+
+3. Configuração do Devise:
+
+Execução do Gerador do Devise:
+
+
+rails generate devise:install
+Geração do Modelo de Usuário:
+
+rails generate devise User
+Execução das Migrações do Banco de Dados:
+
+
+rails db:migrate
+
+
+4. Configuração das Rotas:
+
+Edição do Arquivo config/routes.rb:
+Adicione a seguinte linha:
+
+devise_for :users
+5. Utilização em uma Visualização:
+
+Criação de uma Visualização Simples:
+Crie um controlador com uma ação e uma visualização. Execute os comandos:
+bash
+Copy code
+rails generate controller welcome index
+Abra app/views/welcome/index.html.erb e adicione:
+html
+Copy code
+<h1>Welcome#index</h1>
+<%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+6. Execução do Projeto:
+
+Inicialização do Servidor:
+
+bash
+Copy code
+rails server
+Acesso ao Projeto:
+
+Abra o navegador e acesse http://localhost:3000.
+
+
+gem install psych --platform ruby

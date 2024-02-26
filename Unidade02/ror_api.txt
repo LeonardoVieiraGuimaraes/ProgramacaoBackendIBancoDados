@@ -1,0 +1,44 @@
+1. Crie uma nova aplicação Rails no modo API com o comando: 
+rails new ror_api --api
+
+2. Navegue para o diretório da nova aplicação com o comando: 
+cd ror_api
+
+3. Crie um novo modelo e a tabela correspondente no banco de dados com os comandos: 
+rails generate model Task title:string description:text completed:boolean 
+
+4. Execute a migração para criar a tabela correspondente no banco de dados com o comando: 
+rails db:migrate
+
+5. Crie um novo controlador e as rotas correspondentes com o comando: rails generate controller api/v1/tasks
+
+6. Abra o arquivo app/controllers/api/v1/TasksController.rb e adicione os métodos de ação necessários para as operações CRUD (Create, Read, Update, Delete). 
+
+7. Abra o arquivo config/routes.rb e adicione as rotas para as ações do controlador:
+
+8. Agora, você pode iniciar o servidor Rails:
+
+rails server
+
+
+9.A API está pronta para ser usada! A seguir estão alguns exemplos de solicitações que você pode fazer usando o comando curl no terminal.
+
+    9.1 Obter todas as tarefas:
+
+    curl http://localhost:3000/api/v1/tasks
+
+    9.2 Criar uma nova tarefa:
+
+    curl -X POST -H "Content-Type: application/json" -d  '{"task": {"title": "Nova Tarefa", "description":"Descrição da tarefa"}}' http://localhost:3000/api/v1/tasks
+
+    9.3 Obter uma tarefa específica:
+
+    curl http://localhost:3000/api/v1/tasks/1
+
+    9.4 Atualizar uma tarefa:
+
+    curl -X PUT -H "Content-Type: application/json" -d  '{"task":{"completed":true}}' http://localhost:3000
+
+
+
+    rails db:rollback STEP=1
