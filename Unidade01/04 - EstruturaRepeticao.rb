@@ -27,7 +27,7 @@ end
 
 
 # Estrutura de Repetição no Ruby on Rails (TIMES)
-5.times do
+10.times do
   puts "Olá, Mundo"
 end
 
