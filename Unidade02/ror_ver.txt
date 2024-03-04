@@ -1,0 +1,70 @@
+Certamente, criar uma aplicação completa pode ser um projeto extenso. No entanto, posso fornecer um exemplo simplificado de uma aplicação de lista de produtos com paginação usando Ruby on Rails, a gem Kaminari e alguns ajustes de paginação.
+
+Passo 1: Configuração do Projeto Rails e Instalação das Gems
+
+Certifique-se de ter o Ruby on Rails instalado. Se ainda não o tiver, você pode instalá-lo usando:
+
+gem install rails
+
+Em seguida, crie um novo projeto Rails:
+rails new PaginacaoApp
+cd PaginacaoApp
+
+Adicione a gem Kaminari ao seu Gemfile:
+# Gemfile
+gem 'kaminari'
+
+
+Execute o comando bundle install para instalar a gem:
+bundle install
+
+Passo 2: Modelo e Migração
+
+Crie um modelo chamado Product com alguns atributos básicos (por exemplo, name, price, description). Em seguida, execute a migração:
+
+rails generate model Product name:string price:float description:text
+rails db:migrate
+
+Passo 3: Semeando Dados
+
+Crie alguns dados de exemplo para preencher o banco de dados:
+touch db/seeds.rb
+rails generate seed
+rails db:seed
+
+Passo 4: Controlador e Rotas
+
+Crie um controlador chamado Products com ações para listar produtos e ajustar a página:
+rails generate controller Products index
+
+No controlador products_controller.rb, adicione o seguinte código:
+# app/controllers/products_controller.rb
+class ProductsController < ApplicationController
+  def index
+    @products = Product.page(params[:page]).per(10)
+  end
+end
+
+Certifique-se de ter rotas para o controlador em config/routes.rb:
+# config/routes.rb
+Rails.application.routes.draw do
+  resources :products, only: [:index]
+  root to: 'products#index'
+end
+
+Passo 5: Visualizações
+
+Na view app/views/products/index.html.erb, exiba os produtos e a paginação:
+<!-- app/views/products/index.html.erb -->
+<h1>Lista de Produtos</h1>
+
+<% @products.each do |product| %>
+  <p><strong><%= product.name %></strong>: <%= product.description %>, $<%= product.price %></p>
+<% end %>
+
+<%= paginate @products %>
+
+Passo 6: Testar a Aplicação
+
+Inicie o servidor Rails e acesse http://localhost:3000 no navegador:
+rails server

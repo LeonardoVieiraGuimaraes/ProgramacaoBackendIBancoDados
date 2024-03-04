@@ -37,8 +37,6 @@ rails server
 
     9.4 Atualizar uma tarefa:
 
-    curl -X PUT -H "Content-Type: application/json" -d  '{"task":{"completed":true}}' http://localhost:3000
-
-
+    curl -X PUT -H "Content-Type: application/json" -d  '{"task":{"completed":true}}' http://localhost:3000/api/v1/tasks/1
 
     rails db:rollback STEP=1
