@@ -1,0 +1,59 @@
+1 - crie o projeto
+rails new httparty
+
+2 - adcione na biblioteca gem
+gem 'httparty'
+bundle install
+
+
+3 - criar uma classe que será a responsável por fazer a requisição
+HTTP para a API do clima. Então, criar um novo arquivo chamado weather_api.
+no diretório colocar o codigo
+
+require 'httparty'
+
+class Weather
+  BASE_URL = 'https://api.weatherapi.com/v1'.freeze
+
+  def initialize(api_key)
+    @api_key = api_key
+  end
+
+  def get_weather(city)
+    url = "#{BASE_URL}/current.json?key=#{@api_key}&q=#{city}"
+    response = HTTParty.get(url)
+    if response.success?
+      response.parsed_response
+    else
+      nil
+    end
+  end
+end
+
+4 - em app/controllers criar o arquivo weather_controller.rb e adiconar o codigo
+class WeatherController < ApplicationController
+  def show
+    api_key = 'your_api_key' # Substitua por sua chave de API real
+    weather_api = Weather.new(api_key)
+    city = 'Sao Paulo' # Cidade desejada
+    @weather = weather_api.get_weather(city)
+  end
+end
+
+5 - criar a view weather/show.html.erb
+
+<h1>Previsão do Tempo para <%= city %></h1>
+  <% if @weather %>
+      <p>Temperatura: <%= @weather['current']['temp_c'] %>°C</p>
+      <p>Condição: <%= @weather['current']['condition']['text'] %></p>
+      <!-- outras informações do clima que desejar exibir -->
+  <% else %>
+      <p>Não foi possível obter a previsão do tempo.</p>
+  <% end %>
+
+
+6 - crie a rota em config/routes.rb
+get '/weather', to: 'weather#show'
+
+6 - execute rail server
+e abra localhost:3000/weather/show

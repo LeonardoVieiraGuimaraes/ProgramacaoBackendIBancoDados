@@ -1,0 +1,72 @@
+Passo 1: Configurando a API em Ruby on Rails
+Uma API implementada em uma aplicação Ruby on Rails permite listar todos
+os produtos disponíveis e criar novos produtos. É necessário certificar que esta
+API esteja funcionando corretamente localmente (em http://localhost:3000)
+antes de prosseguir com os testes.
+
+Passo 2: instalando o Postman – é necessário fazer o download e instalação
+local do Postman.
+
+Passo 3: criando uma coleção – abrir o Postman e criar uma nova coleção para
+testes. Neste exemplo, esta coleção será chamada de “API de Produtos”.
+
+Passo 4: criando testes – dentro da coleção “API de Produtos”, deve-se criar dois
+testes diferentes, conforme os itens a seguir.
+
+Teste 1: Listar todos os produtos
+Nome do Teste: Listar Produtos
+Método: GET
+URL: http://localhost:3000/produtos
+Código do Teste:
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response is JSON", function () {
+    pm.response.to.be.json;
+});
+
+pm.text("Body should contain a list of products", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.length).to.be.above(0);
+});
+
+
+
+Descrição da Imagem: recorte da captura de tela que mostra o prompt de comando criando três testes distintos.
+No primeiro, o método pm.response.to.have.status(200) avalia se o status da resposta é 200 e, caso positivo,
+o teste é considerado bem-sucedido. No segundo, o método pm.response.to.be.json verifica se o conteúdo da
+resposta está em formato JSON, garantindo que a API esteja retornando os dados esperados no formato adequado.
+No terceiro, o conteúdo JSON da resposta é armazenado em uma variável chamada jsonData. Em seguida, o teste
+pm.expect(jsonData.length).to.be.above(0) verifica se o comprimento (número de elementos) do JSON é maior
+que zero, ou seja, se há pelo menos um produto retornado pela API. Fim da descrição.
+
+Teste 2: Criar um novo produto
+Nome do Teste: Criar Produto
+Método: POST
+URL: http://localhost:3000/produtos
+Cabeçalhos (Headers): Content-Type: application/json
+Corpo (Body) (selecionar o tipo “raw” e insira o seguinte JSON):
+
+Figura 2 – Criando estrutura de dados amplamente utilizada para representar informações em formato de texto
+Fonte: o autor.
+Descrição da Imagem: recorte da captura de tela que mostra o prompt de comando que cria o objeto JSON representa
+as informações de um produto fictício. Este objeto possui três atributos: "nome", "preco" e "descricao". Cada
+atributo está associado a um valor específico, delimitado por ":". A chave "nome" tem o valor "Produto de Teste",
+que representa o nome do produto. O atributo "preco" tem o valor numérico 29.99, indicando o preço do produto.
+E por fim, o atributo "descricao" tem o valor "Este é um produto de teste criado pelo Postman", que fornece uma
+breve descrição do produto. Fim da descrição.
+
+Criando o código de teste:
+
+Figura 3 – Criando estrutura de teste para verificar as características da resposta de uma API após criar
+um novo produto / Fonte: o autor.
+Descrição da Imagem: recorte da captura de tela que mostra o prompt de comando que cria três testes distintos.
+No primeiro, o método pm.response.to.have.status(201) verifica se o status da resposta é 201, o que indica que
+a criação do produto foi bem-sucedida. Se o status for 201, o teste é considerado bem-sucedido. No segundo,
+o método pm.response.to.be.json verifica se o conteúdo da resposta está em formato JSON, garantindo que a
+API esteja retornando os dados esperados no formato adequado. O terceiro, o conteúdo JSON da resposta é armazenado
+em uma variável jsonData. Em seguida, o teste pm.expect(jsonData.nome).to.eql("Produto de Teste")
+verifica se o atributo "nome" do JSON é igual a "Produto de Teste". Se o nome do produto criado for igual ao valor
+esperado, o teste é considerado bem-sucedido. Fim da descrição.

@@ -16,7 +16,10 @@ rails db:migrate
 devise_for :users
 
 5. Subir o servidor:
-rails server 1. Crie o projeto ror_autenticacaoHTTP
+rails server 
+
+
+Crie o projeto ror_autenticacaoHTTP
 rails new ror_autenticacaoHTTP
 
 
