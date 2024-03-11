@@ -1,6 +1,6 @@
 # Arquivo: estrutura_condicional.rb
 
-valor = 120
+valor = 100
 frete = 10
 
 if valor > 100
