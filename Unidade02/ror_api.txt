@@ -10,7 +10,8 @@ rails generate model Task title:string description:text completed:boolean
 4. Execute a migração para criar a tabela correspondente no banco de dados com o comando: 
 rails db:migrate
 
-5. Crie um novo controlador e as rotas correspondentes com o comando: rails generate controller api/v1/tasks
+5. Crie um novo controlador e as rotas correspondentes com o comando: 
+rails generate controller api/v1/tasks
 
 6. Abra o arquivo app/controllers/api/v1/TasksController.rb e adicione os métodos de ação necessários para as operações CRUD (Create, Read, Update, Delete). 
 
