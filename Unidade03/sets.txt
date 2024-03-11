@@ -1,0 +1,78 @@
+1. Primeiro, vamos criar uma nova aplicação Rails. No terminal, execute o seguinte comando:
+
+gem install turbo-rails -v '2.0.5'
+gem install irb -v '1.12.0'
+
+rails new my_app
+
+2. Navegue até o diretório da nova aplicação:
+
+cd my_app
+
+3. Agora, vamos gerar um scaffold para o Produto. Isso criará todas as partes necessárias (modelo, controlador, visualizações, rotas, etc.) para o CRUD de produtos:
+
+rails generate scaffold Produto nome:string preco:decimal descricao:text
+
+4. Em seguida, precisamos migrar o banco de dados para criar a tabela de produtos:
+
+rails db:migrate
+
+5. Agora, você tem uma aplicação Rails básica com um CRUD para produtos. Você pode iniciar o servidor Rails com o seguinte comando:
+
+rails server
+
+E então você pode acessar a aplicação em seu navegador em http://localhost:3000/produtos.
+
+Para desativar a proteção CSRF para um controlador específico, você pode adicionar a seguinte linha no início do seu controlador:
+
+skip_before_action :verify_authenticity_token
+
+Teste 1: Listar todos os produtos
+Nome do Teste: Listar Produtos
+Método: GET
+URL: http://localhost:3000/produtos
+
+Código do Teste:
+// Verificar se o status da resposta é 200
+pm.test("Status da resposta deve ser 200", function () {
+    pm.response.to.have.status(200);
+});
+
+// Verificar se a resposta é em formato JSON
+pm.test("Resposta deve ser em formato JSON", function () {
+    pm.response.to.be.json;
+});
+
+// Verificar se a resposta retorna dados
+pm.test("Resposta deve retornar dados", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.length).to.be.above(0);
+});
+
+Teste 2: Criar um novo produto
+Nome do Teste: Criar Produto
+Método: POST
+URL: http://localhost:3000/produtos
+Cabeçalhos (Headers): Content-Type: application/json
+Corpo (Body) (selecionar o tipo “raw” e insira o seguinte JSON):
+
+{
+    "produto": {
+        "nome": "Produto Teste",
+        "preco": 50.0,
+        "descricao": "Este é o Produto 1."
+    }
+}
+
+pm.test("Status da resposta deve ser 201", function () {
+    pm.response.to.have.status(201);
+});
+
+pm.test("Resposta deve ser em formato JSON", function () {
+    pm.response.to.be.json;
+});
+
+pm.test("O produto criado deve conter o nome correto", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.nome).to.eql("Produto Teste");
+});

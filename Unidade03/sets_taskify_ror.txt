@@ -1,0 +1,97 @@
+Para criar uma aplicação Rails completa de gerenciamento de tarefas com a gem Devise para autenticação de usuários, Bootstrap para estilização e hospedagem no Heroku, você pode seguir os seguintes passos:
+
+Crie uma nova aplicação Rails:
+rails new taskify
+
+Navegue para o diretório da nova aplicação:
+cd taskify
+
+Adicione as gems 'devise' e 'bootstrap' ao seu Gemfile:
+gem 'devise'
+gem 'bootstrap', '~> 5.0.1'
+
+Instale as gems:
+bundle install
+
+Instale o Devise:
+rails generate devise:install
+
+Crie um modelo de usuário com o Devise:
+rails generate devise User
+
+Crie um novo scaffold para tarefas:
+rails generate scaffold Task title:string description:text user:references
+
+Rode as migrações para criar as tabelas no banco de dados:
+rails db:migrate
+
+Adicione o Bootstrap ao seu arquivo app/assets/stylesheets/application.scss:
+@import "bootstrap";
+
+Adicione a associação has_many :tasks ao modelo User:
+class User < ApplicationRecord
+    devise :database_authenticatable, :registerable,
+                 :recoverable, :rememberable, :validatable
+
+    has_many :tasks
+end
+
+
+Adicione a associação belongs_to :user ao modelo Task:
+class Task < ApplicationRecord
+    belongs_to :user
+end
+
+
+Adicione a autenticação de usuário às suas controladoras conforme necessário. Por exemplo, na controladora TasksController:
+before_action :authenticate_user!
+
+Crie um repositório Git para o seu projeto:
+git init
+git add .
+git commit -m "Initial commit"
+
+Crie um novo aplicativo no Heroku:
+heroku create
+
+Faça o deploy do seu aplicativo no Heroku:
+git push heroku master
+
+Rode as migrações no Heroku:
+heroku run rails db:migrate
+
+Agora você deve ter uma aplicação Rails completa de gerenciamento de tarefas com autenticação de usuários, estilizada com Bootstrap e hospedada no Heroku.
+
+Passo 1: preparação
+Antes de começar, certifique-se de ter o seguinte:
+■ Uma aplicação Ruby on Rails funcionando localmente.
+■ Conta na plataforma Heroku (https://www.heroku.com/).
+■ Heroku CLI instalado (https://devcenter.heroku.com/articles/heroku-cli).
+
+Passo 2: configuração do banco de dados
+A Heroku oferece um serviço de banco de dados próprio, o que possibilita utilizar
+este banco através do software de gerenciamento PostgreSQL para a aplicação
+Rails. É importante certificar que o arquivo config/database.yml esteja configurado
+para usar o SGBD, caso contrário, é necessário fazer a configuração devida.
+
+Passo 3: preparação do Git
+Certificar que o aplicativo está sob controle de versão do Git.
+
+Passo 4: criação da aplicação no Heroku
+Executar os seguintes comandos no terminal:
+
+
+Passo 5: configurações adicionais
+Pode ser necessário, durante o processo de publicação, configurar variáveis de
+ambiente, como chaves secretas e configurações específicas da sua aplicação. Para
+isso, basta utilizar o comando heroku config:set.
+
+Passo 6: deploy
+Agora é hora de fazer o deploy na aplicação para o Heroku.
+
+Passo 7: migração do banco de dados
+Executar as migrações do banco de dados na plataforma Heroku.
+
+Passo 8: acesso à aplicação
+Após a conclusão do deploy, a aplicação estará on-line, permitindo ser acessada
+no navegador ou através do terminal, utilizando o seguinte comando:

@@ -1,0 +1,82 @@
+Para criar uma nova aplicação Rails API com um modelo de Produto, você pode seguir os seguintes passos:
+
+1. Crie uma nova aplicação Rails API. No terminal, execute o seguinte comando:
+rails new my_api --api
+
+2. Navegue até o diretório da nova aplicação:
+cd my_api
+
+3. Agora, vamos gerar um modelo para o Produto. Isso criará todas as partes necessárias (modelo, migração, etc.) para o Produto:
+rails generate model Produto nome:string preco:decimal descricao:text
+
+Em seguida, execute a migração para criar a tabela de produtos no banco de dados:
+rails db:migrate
+
+Agora, vamos criar um controlador para o Produto. Isso criará um controlador com as ações padrão (index, show, create, update, destroy):
+rails generate controller Produtos
+
+Abra o arquivo app/controllers/produtos_controller.rb e adicione o seguinte código:
+
+class ProdutosController < ApplicationController
+    before_action :set_produto, only: [:show, :update, :destroy]
+
+    # GET /produtos
+    def index
+        @produtos = Produto.all
+
+        render json: @produtos
+    end
+
+    # GET /produtos/1
+    def show
+        render json: @produto
+    end
+
+    # POST /produtos
+    def create
+        @produto = Produto.new(produto_params)
+
+        if @produto.save
+            render json: @produto, status: :created, location: @produto
+        else
+            render json: @produto.errors, status: :unprocessable_entity
+        end
+    end
+
+    # PATCH/PUT /produtos/1
+    def update
+        if @produto.update(produto_params)
+            render json: @produto
+        else
+            render json: @produto.errors, status: :unprocessable_entity
+        end
+    end
+
+    # DELETE /produtos/1
+    def destroy
+        @produto.destroy
+    end
+
+    private
+        # Use callbacks to share common setup or constraints between actions.
+        def set_produto
+            @produto = Produto.find(params[:id])
+        end
+
+        # Only allow a list of trusted parameters through.
+        def produto_params
+            params.require(:produto).permit(:nome, :preco, :descricao)
+        end
+end
+
+
+
+Finalmente, você precisa configurar as rotas para os produtos. Abra o arquivo config/routes.rb e adicione o seguinte código:
+Rails.application.routes.draw do
+    resources :produtos
+end
+
+
+
+
+Agora você tem uma API Rails básica com um modelo de Produto e um controlador com ações CRUD.

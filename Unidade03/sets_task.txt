@@ -1,0 +1,212 @@
+Para criar uma nova aplicação Rails com um modelo de Tarefa, você pode seguir os seguintes passos:
+
+1. Crie uma nova aplicação Rails. No terminal, execute o seguinte comando:
+rails new to_do_list
+
+2. Navegue até o diretório da nova aplicação:
+cd to_do_list
+
+3. Agora, vamos gerar um modelo para a Tarefa. Isso criará todas as partes necessárias (modelo, migração, etc.) para a Tarefa:
+rails generate model Task title:string description:text
+
+4. Em seguida, execute a migração para criar a tabela de tarefas no banco de dados:
+rails db:migrate
+
+5. Agora, vamos criar um controlador para a Tarefa. Isso criará um controlador com as ações padrão (index, show, create, update, destroy):
+rails generate controller Tasks
+
+6. Abra o arquivo app/controllers/tasks_controller.rb e adicione o seguinte código:
+class TasksController < ApplicationController
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+
+  # GET /tasks
+  def index
+    @tasks = Task.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @tasks }
+    end
+  end
+
+  # GET /tasks/new
+  def new
+    @task = Task.new
+  end
+
+  # GET /tasks/1/edit
+  def edit
+    @task = Task.find(params[:id])
+  end
+
+  # GET /tasks/1
+  def show
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @task }
+    end
+  end
+
+  # POST /tasks
+  def create
+    @task = Task.new(task_params)
+
+    if @task.save
+      respond_to do |format|
+        format.html { redirect_to tasks_path }
+        format.json { render json: @task, status: :created }
+      end
+    else
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /tasks/1
+  def update
+    if @task.update(task_params)
+      respond_to do |format|
+        format.html { redirect_to tasks_path }
+        format.json { render json: @task }
+      end
+    else
+      respond_to do |format|
+        format.html { render :edit }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /tasks/1
+  def destroy
+    @task.destroy
+    respond_to do |format|
+      format.html { redirect_to tasks_path }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_task
+      @task = Task.find(params[:id])
+    end
+
+    # Only allow a list of trusted parameters through.
+    def task_params
+      params.require(:task).permit(:title, :description)
+    end
+end
+
+
+
+7. Finalmente, você precisa configurar as rotas para as tarefas. Abra o arquivo config/routes.rb e adicione o seguinte código:
+
+Rails.application.routes.draw do
+    resources :tasks
+end
+
+Agora você tem uma aplicação Rails básica com um modelo de Tarefa e um controlador com ações CRUD.
+
+8. Agora e realizar a construção da views na pasta views/tasks
+
+8.1 criar o arquivo index.html.erb
+
+    <h1>Lista de Tarefas</h1>
+
+    <ul>
+        <% @tasks.each do |task| %>
+            <li>
+                <strong>Título:</strong> <%= task.title %><br>
+                <strong>Descrição:</strong> <%= task.description %><br>
+                <div class="d-flex align-items-center">
+                <%= link_to 'Mostrar', task_path(task), class: 'btn btn-primary me-2' %> 
+                <%= link_to 'Editar', edit_task_path(task), class: 'btn btn-primary me-2' %> 
+                <%= button_to 'Excluir', task_path(task), method: :delete, data: { confirm: 'Deseja excluir esta tarefa?' }, class: 'btn btn-danger me-2' %>
+            </div>
+            </li>
+        <% end %>
+    </ul>
+
+    <%= link_to 'Nova Tarefa', new_task_path, class: 'btn btn-primary'  %>
+
+8.2 criar o arquivo new.html.erb
+
+    <h1>Nova Tarefa</h1>
+
+    <%= render 'form', task: @task %>
+
+    <%= link_to 'Voltar', tasks_path %>
+
+8.3 criar o arquivo edit.html.erb
+
+    <h1>Editar Tarefa</h1>
+
+    <%= render 'form', task: @task %>
+
+    <%= link_to 'Voltar', tasks_path %>
+
+
+8.4 criar o arquivo _form.html.erb
+
+    <%= form_with(model: task, local: true) do |form| %>
+        <% if task.errors.any? %>
+            <div id="error_explanation">
+                <h2><%= pluralize(task.errors.count, "erro") %> impediu que esta tarefa fosse salva:</h2>
+
+                <ul>
+                <% task.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+                </ul>
+            </div>
+        <% end %>
+
+        <div class="field">
+            <%= form.label :title, "Título" %>
+            <%= form.text_field :title %>
+        </div>
+
+        <div class="field">
+            <%= form.label :description, "Descrição" %>
+            <%= form.text_area :description %>
+        </div>
+
+        <div class="actions">
+            <%= form.submit "Salvar" %>
+        </div>
+    <% end %>
+
+8.5 criar o arquivo show.html.erb
+
+    <h1>Tarefa</h1>
+
+    <p>
+        <strong>Título:</strong>
+        <%= @task.title %>
+    </p>
+
+    <p>
+        <strong>Descrição:</strong>
+        <%= @task.description %>
+    </p>
+
+    <%= link_to 'Editar', edit_task_path(@task) %> |
+    <%= link_to 'Voltar', tasks_path %>
+
+Como instalar o boostrap 
+
+1. Adicione a gem 'bootstrap' ao seu arquivo Gemfile:
+gem 'bootstrap', '~> 5.0.1'
+
+2. Execute o comando bundle install para instalar a gem:
+bundle install
+
+3. Importe o CSS do Bootstrap no arquivo app/assets/stylesheets/application.css. Renomeie este arquivo para application.scss e então importe o Bootstrap:
+@import "bootstrap";
+
+4. Certifique-se de que o jQuery e o Popper.js estão disponíveis se você estiver usando componentes do Bootstrap que dependem de JavaScript. Adicione as seguintes linhas ao seu arquivo app/javascript/packs/application.js:
+
+import "bootstrap"
